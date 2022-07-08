@@ -21,11 +21,26 @@ socket.on("send-message", (message) => {
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   const message = messageInput.value;
-    const roomId = roomInput.value;
-    if(message === "") return
+  const roomId = roomInput.value;
+  if (message === "") return;
   displayMessage(message);
   socket.emit("message", message, roomId);
   messageInput.value = "";
+});
+
+joinRoomButton.addEventListener("click", () => {
+  const roomId = roomInput.value;
+  //   if (roomId === "") return;
+  //   socket.emit("join-room", roomId);
+  socket.emit("join-room", roomId, (msg) => {
+    displayMessage(msg);
+  });
+});
+
+leaveRoomButton.addEventListener("click", () => {
+  socket.close();
+  location.reload();
+  displayMessage("One client left the room");
 });
 
 function displayMessage(message) {
