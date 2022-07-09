@@ -1,3 +1,4 @@
+const { instrument } = require("@socket.io/admin-ui"); //used to use admin portal to manage socket.io
 const io = require("socket.io")(3000, {
   // backend connection port
   // here if we keep it like this, then we'll get CORS errors,
@@ -27,3 +28,7 @@ io.on("connection", (socket) => {
     console.log(`server:: user joined room ${roomId}`);
   });
 });
+
+instrument(io, {
+  auth:false,
+})
